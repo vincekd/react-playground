@@ -1,5 +1,145 @@
-$root-background: #F99;
+$background-color: #232729;
+$foreground-color: #EEEEEC;
+$sub-background-color: #33393b;
+$sidebar-background-color: #2B3032;
+$sidebar-color: #FFF;
+$active-background: #215D9C;
+$top-bar-height: 50px;
+$bottom-bar-height: 24px;
+$sidebar-width: 250px;
+$library-list-header-height: 25px;
+$library-list-header-color: #898B8B;
+$def-border: 1px solid #000;
+
+@mixin set-height($h: 100%) {
+  min-height: $h;
+  height: $h;
+  max-height: $h;
+}
+
+@mixin song-item-grid() {
+  display: grid;
+  grid-template-columns: 15px 22px 1fr 25% 25% 65px;
+  grid-column-gap: 6px;
+  > * {
+    overflow: hidden;
+  }
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  background: $background-color;
+  color: $foreground-color;
+}
+
+.library-list {
+  @include set-height();
+  > h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    height: $library-list-header-height;
+    color: $library-list-header-color;
+    border-bottom: $def-border;
+  }
+  > div {
+    height: calc(100% - #{$library-list-header-height});
+    overflow: auto;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        &.active {
+          background: $active-background;
+          .playing {
+            visibility: visible;
+          }
+        }
+        .playing {
+          //display: none;
+          visibility: hidden;
+        }
+        a {
+          cursor: pointer;
+          padding: 2px 12px;
+          display: block;
+        }
+      }
+    }
+  }
+}
 
 #root {
-  background: $root-background;
+  @include set-height();
+  #wrapper {
+    @include set-height();
+    #top-bar {
+      height: $top-bar-height;
+      border-bottom: $def-border;
+      background: $sub-background-color;
+    }
+    #middle-area {
+      height: calc(100% - #{$top-bar-height} - #{$bottom-bar-height});
+      display: grid;
+      grid-template-columns: $sidebar-width 1fr;
+
+      #sidebar {
+        @include set-height();
+        border-right: $def-border;
+        background: $sidebar-background-color;
+        color: $sidebar-color;
+      }
+
+      #music-view {
+        @include set-height();
+        display: grid;
+        grid-template-rows: 40% 1fr;
+
+        #artist-albums {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        #songs {
+          @include set-height();
+          $song-labels-height: 20px;
+          #song-labels {
+            height: $song-labels-height;
+            //TODO: this is check accomodating scrollbar
+            color: $library-list-header-color;
+            margin-right: 16px;
+            @include song-item-grid();
+          }
+          #song-list {
+            height: calc(100% - #{$library-list-header-height} - #{$song-labels-height});
+            .song-item {
+              @include song-item-grid();
+              padding: 2px 0;
+            }
+          }
+        }
+      }
+    }
+    #bottom-bar {
+      height: $bottom-bar-height;
+      border-top: $def-border;
+      background: $sub-background-color;
+      div {
+        margin: 0 10px;
+        > span {
+          padding: 0 10px;
+          .header {
+            color: $library-list-header-color;
+          }
+        }
+      }
+    }
+  }
 }
+

@@ -20,5 +20,13 @@ module.exports = {
             loaders: ['style-loader', 'css-loader', 'sass-loader']
         }]
     },
-    plugins: [htmlPlugin]
+    plugins: [htmlPlugin],
+    devServer: {
+        proxy: {
+            "/api": {
+                target: "http://localhost:3000",
+                pathRewrite: {"^/api": ""}
+            }
+        }
+    }
 };
