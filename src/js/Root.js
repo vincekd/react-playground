@@ -22,8 +22,7 @@ class Root extends React.Component {
                     artist: null,
                     album: null,
                     song: null
-                },
-                history: [],
+                }
             },
             player: {
                 current: null,
@@ -43,7 +42,7 @@ class Root extends React.Component {
                 console.info("fetched music", artists);
                 const albums = [],
                       songs = [],
-                      playlists = Array(5).fill(null).map((_, i) => ({name: "Playlist " + i}));
+                      playlists = Array(5).fill(null).map((_, i) => ({name: "Playlist " + (i + 1)}));
                 artists.forEach(artist => {
                     artist.albums.forEach(album => {
                         album.artist = artist.name;
@@ -65,14 +64,10 @@ class Root extends React.Component {
         });
     }
 
-    generateHistory() {
-        return this.state.location.history.slice().concat(this.state.location.current);
-    }
-
     selectArtist(artist) {
         if (artist !== this.state.location.current.artist) {
             this.setState({
-                location: getLocation(artist, null, null, this.generateHistory())
+                location: getLocation(artist, null, null)
             });
         }
     }
@@ -82,7 +77,7 @@ class Root extends React.Component {
             const artist = this.state.music.artists.find(a => a.name === album.artist);
             console.log("artist", artist);
             this.setState({
-                location: getLocation(artist, album, null, this.generateHistory())
+                location: getLocation(artist, album, null)
             });
         }
     }
@@ -92,7 +87,7 @@ class Root extends React.Component {
             const artist = this.state.music.artists.find(a => a.name === song.artist),
                   album = artist.albums.find(a => a.name === song.album);
             this.setState({
-                location: getLocation(artist, album, song, this.generateHistory())
+                location: getLocation(artist, album, song)
             });
         }
     }
@@ -111,20 +106,16 @@ class Root extends React.Component {
             <div id="wrapper">
               <div id="top-bar"><TopBar player={this.state.player} /></div>
               <div id="middle-area">
-                <div id="sidebar"><LibrarySidebar location={this.state.location} playlists={this.state.music.playlists} /></div>
+                <LibrarySidebar location={this.state.location} playlists={this.state.music.playlists} />
                 <div id="music-view">
                   <div id="artist-albums">
                     <LibraryList items={artists} handleClick={(artist) => this.selectArtist(artist)} name="Artists" current={artist}/>
                     <LibraryList items={albums} handleClick={(album) => this.selectAlbum(album)} name="Albums" current={album}/>
                   </div>
-                  <div id="songs">
-                    <SongList songs={songs} handleClick={song => this.selectSong(song)} current={song}/>
-                  </div>
+                  <SongList songs={songs} handleClick={song => this.selectSong(song)} current={song}/>
                 </div>
               </div>
-              <div id="bottom-bar">
-                <BottomBar {...this.state.location.current} />
-              </div>
+              <BottomBar {...this.state.location.current} />
             </div>
         );
     }
@@ -134,10 +125,9 @@ function collect(items, type) {
     return ;
 }
 
-function getLocation(artist = null, album = null, song = null, history = []) {
+function getLocation(artist = null, album = null, song = null) {
     return {
-        current: {artist, album, song},
-        history
+        current: {artist, album, song}
     };
 }
 

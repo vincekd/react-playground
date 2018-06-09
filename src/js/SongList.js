@@ -20,7 +20,7 @@ class SongList extends React.Component {
             );
         });
         return (
-            <div className="library-list">
+            <div className="library-list" id="songs">
               <h3>Songs</h3>
               <div id="song-labels">
                 <span></span>                

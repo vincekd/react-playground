@@ -8,7 +8,7 @@ class LibrarySidebar extends React.Component {
             return <li key={playlist.name}><a>{playlist.name}</a></li>;
         });
         return (
-            <div>
+            <div id="sidebar">
               <div>
                 <h2>Library</h2>
                 <ul>
