@@ -37,6 +37,15 @@ class Root extends React.Component {
 //     }
 
     render() {
+        // const artist = this.state.location.current.artist,
+        //       album = this.state.location.current.album,
+        //       song = this.state.location.current.song,
+        //       artists = this.state.music.artists,
+        //       albums = (artist ? artist.albums : this.state.music.albums),
+        //       songs = (album ? album.songs :
+        //               (artist ? artist.albums.reduce((arr, item) => arr.concat(item.songs), []) :
+        //                       this.state.music.songs));
+
         return (
             <div id="wrapper">
               <div id="top-bar"><TopBar /></div>
