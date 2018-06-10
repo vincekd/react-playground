@@ -1,6 +1,6 @@
 /* -*- mode: js-jsx -*- */
 
-//import React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({...state.location.music});
