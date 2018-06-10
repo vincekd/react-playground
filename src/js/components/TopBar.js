@@ -1,4 +1,4 @@
-/* -*- mode: rjsx -*- */
+/* -*- mode: js-jsx -*- */
 
 import React from 'react';
 

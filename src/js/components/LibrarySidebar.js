@@ -1,6 +1,13 @@
-/* -*- mode: rjsx -*- */
+/* -*- mode: js-jsx -*- */
 
 import React from 'react';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => {
+    return {
+        playlists: state.music.playlists.slice()
+    };
+};
 
 class LibrarySidebar extends React.Component {
     render() {
@@ -27,4 +34,6 @@ class LibrarySidebar extends React.Component {
     }
 }
 
-export default LibrarySidebar;
+const ConnectedLibrarySidebar = connect(mapStateToProps)(LibrarySidebar);
+
+export default ConnectedLibrarySidebar;
