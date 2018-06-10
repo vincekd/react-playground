@@ -108,10 +108,15 @@ body {
           list-style: none;
           padding: 0;
           margin: 0;
-          a {
-            display: block;
-            cursor: pointer;
-            padding: 4px 15px;
+          > li {
+            &.active {
+              background: $active-background;
+            }
+            a {
+              display: block;
+              cursor: pointer;
+              padding: 4px 15px;
+            }
           }
         }
       }

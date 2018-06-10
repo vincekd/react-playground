@@ -2,42 +2,41 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectArtist } from '../actions/index';
 
 const mapStateToProps = state => {
-    //TODO: fix this with props?
     return {
-        items: state.music.artists,
-        current: null
+        artists: state.music.artists,
+        current: state.location.music.artist
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        selectArtist: artist => dispatch(selectArtist(artist))
     };
 };
 
 class LibraryList extends React.Component {
-    handleClick(item) {
-        console.log("clicked item", item);
-    }
-
     render() {
-        console.log("this.props", this.props);
-        const list = this.props.items.map(item => {
-            const len = ((this.props.name === "Artists" ? item.albums : item.songs) || []).length;
+        const list = this.props.artists.map(item => {
             return (
                 <li key={item.name} className={item === this.props.current ? 'active' : ''}>
-                  <a onClick={() => this.handleClick(item)}>
+                  <a onClick={() => this.props.selectArtist(item)}>
                     <span>{item.name}</span>
-                    <span>({len})</span>
+                    <span>({item.albums.length})</span>
                   </a>
                 </li>
             );
         });
         return (
             <div className="library-list">
-              <h3>{this.props.name}</h3>
+              <h3>Artists</h3>
               <div><ul>{list}</ul></div>
             </div>
         );
     }
 }
 
-const ConnectedLibraryList = connect(mapStateToProps)(LibraryList);
+const ConnectedLibraryList = connect(mapStateToProps, mapDispatchToProps)(LibraryList);
 
 export default ConnectedLibraryList;

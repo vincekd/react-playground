@@ -7,8 +7,9 @@ const http = require("http"),
       data = getRandomData(),
       handler = (req, res) => {
           console.log("api request", req.url);
+          const playlists = Array(5).fill(null).map((_, i) => ({name: "Playlist " + (i + 1)}));
           if (req.url === "/music") {
-              res.end(JSON.stringify(data));
+              res.end(JSON.stringify({artists: data, playlists}));
           } else {
               res.statusCode = 404;
               res.statusMessage = "Not Found";

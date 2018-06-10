@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlPlugin = new HtmlWebpackPlugin({
     template: "./src/index.html",
     filename: "./index.html",
-    title: "React, Redux, Webpack, Sass Music Player",
+    title: "React, Redux, Thunk, Webpack, & Sass Rhythmbox Music Player Clone",
     minify: true
 });
 

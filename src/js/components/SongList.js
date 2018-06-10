@@ -2,43 +2,43 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectSong, playSong } from '../actions/index';
 
 const mapStateToProps = state => {
-    const album = state.location.music.album,
-          artist = state.location.artist,
+    const artist = state.location.music.artist,
+          album = state.location.music.album,
           songs = (album ? album.songs :
                   (artist ? artist.albums.reduce((arr, item) => arr.concat(item.songs), []) :
-                          this.state.music.songs));
+                          state.location.music.song ? [state.location.music.song] : state.music.songs));
     return {
         songs: songs,
         current: state.location.music.song
     };
 };
 
-class SongList extends React.Component {
+const mapDispatchToProps = dispatch => {
+    return {
+        selectSong: data => dispatch(selectSong(data)),
+        playSong: data => dispatch(playSong(data))
+    };
+};
 
-    handleClick(song) {
-        console.log("clicked song", song);
-    }
-    
-    handleDblClick(song) {
-        console.log("double clicked song", song);
-    }
-    
+class SongList extends React.Component {
     render() {
         const list = this.props.songs.map(item => {
+            const duration = Math.floor(item.duration / 60)  + ":" + (item.duration % 60);
             return (
-                <li key={item.artist + "-" + item.album + "-" + item.name}
+                <li key={item.artist.name + "-" + item.album.name + "-" + item.name}
                     className={item === this.props.current ? 'active' : ''}>
-                  <a onDoubleClick={() => this.handleDblClick(item)}
-                    onClick={() => this.handleClick(item)}
+                  <a onDoubleClick={() => this.props.playSong(item)}
+                    onClick={() => this.props.selectSong(item)}
                     className="song-item">
                     <span className="playing">&gt;</span>
                     <span>{item.track}</span>
                     <span>{item.name}</span>
-                    <span>{item.album}</span>
-                    <span>{item.artist}</span>
-                    <span>4:20</span>
+                    <span>{item.album.name}</span>
+                    <span>{item.artist.name}</span>
+                    <span>{duration}</span>
                   </a>
                 </li>
             );
@@ -62,6 +62,6 @@ class SongList extends React.Component {
     }
 }
 
-const ConnectedSongList = connect(mapStateToProps)(SongList);
+const ConnectedSongList = connect(mapStateToProps, mapDispatchToProps)(SongList);
 
 export default ConnectedSongList;
