@@ -4,22 +4,23 @@ $sub-background-color: #33393b;
 $sidebar-background-color: #2B3032;
 $sidebar-color: #FFF;
 $active-background: #215D9C;
-$top-bar-height: 50px;
+$top-bar-height: 65px;
 $bottom-bar-height: 24px;
 $sidebar-width: 250px;
 $library-list-header-height: 25px;
 $library-list-header-color: #898B8B;
+$song-labels-height: 20px;
 $def-border: 1px solid #000;
 $font-size: 16px;
 $medium-font: 18px;
 $large-font: 20px;
+$active-button: radial-gradient($sidebar-background-color, #3D3D3D);
 
 @mixin set-height($h: 100%) {
   min-height: $h;
   height: $h;
   max-height: $h;
 }
-
 @mixin song-item-grid() {
   display: grid;
   grid-template-columns: 15px 22px 1fr 25% 25% 65px;
@@ -27,6 +28,12 @@ $large-font: 20px;
   > * {
     overflow: hidden;
   }
+}
+@mixin no-user-select() {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 html,
@@ -61,12 +68,8 @@ body {
       li {
         &.active {
           background: $active-background;
-          .playing {
-            visibility: visible;
-          }
         }
         .playing {
-          //display: none;
           visibility: hidden;
         }
         a {
@@ -75,6 +78,24 @@ body {
           display: block;
         }
       }
+    }
+  }
+}
+.songs {
+  @include set-height();
+
+  .song-labels {
+    height: $song-labels-height;
+    //TODO: this is check accomodating scrollbar
+    color: $library-list-header-color;
+    margin-right: 16px;
+    @include song-item-grid();
+  }
+  .song-list {
+    .song-item {
+      @include song-item-grid();
+      padding: 2px 0;
+      @include no-user-select();
     }
   }
 }
@@ -87,6 +108,50 @@ body {
       height: $top-bar-height;
       border-bottom: $def-border;
       background: $sub-background-color;
+      display: grid;
+      grid-template-columns: 200px 150px 1fr 325px;
+      #controls,
+      #settings {
+        margin-top: 4px;
+        text-align: center;
+      }
+      button {
+        margin: 0;
+        padding: 10px;
+        border: $def-border;
+        border-radius: 5px;
+        background: $background-color;
+        color: $foreground-color;
+        cursor: pointer;
+        @include no-user-select();
+        &:hover {
+          background-color: $sidebar-background-color;
+        }
+        &:active,
+        &.active {
+          outline: none;
+          background-image: $active-button;
+        }
+        &:focus {
+          outline: none;
+        }
+        svg:focus,svg:active,svg:hover {
+          outline: none;
+        }
+        &.middle {
+          border-radius: 0;
+          border-right: none;
+          border-left: none;
+        }
+        &.left {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        &.right {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
     }
 
     #middle-area {
@@ -121,6 +186,14 @@ body {
         }
       }
 
+      #queue-list {
+        li.active {
+          .playing {
+            visibility: visible;
+          }
+        }
+      }
+
       #music-view {
         @include set-height();
         display: grid;
@@ -130,23 +203,8 @@ body {
           display: grid;
           grid-template-columns: 1fr 1fr;
         }
-        #songs {
-          @include set-height();
-          $song-labels-height: 20px;
-          #song-labels {
-            height: $song-labels-height;
-            //TODO: this is check accomodating scrollbar
-            color: $library-list-header-color;
-            margin-right: 16px;
-            @include song-item-grid();
-          }
-          #song-list {
-            height: calc(100% - #{$library-list-header-height} - #{$song-labels-height});
-            .song-item {
-              @include song-item-grid();
-              padding: 2px 0;
-            }
-          }
+        .song-list {
+          height: calc(100% - #{$library-list-header-height} - #{$song-labels-height});
         }
       }
     }
@@ -165,4 +223,3 @@ body {
     }
   }
 }
-

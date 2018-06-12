@@ -4,7 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
-import SongList from './SongList';
+import LibrarySongList from './LibrarySongList';
+import QueueList from './QueueList';
 
 const mapStateToProps = state => {
     return {view: state.location.view};
@@ -18,11 +19,11 @@ const ViewArea = ({view}) => {
                 <ArtistList />
                 <AlbumList />
               </div>
-              <SongList />
+              <LibrarySongList />
             </div>
         );
     } else if (view === "queue") {
-        return <div>Queue</div>;
+        return <QueueList />;
     } else if (view === "podcasts") {
         return <div>Podcasts</div>;
     } else if (view === "radio") {

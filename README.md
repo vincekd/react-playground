@@ -1,1 +1,1 @@
-playground for react/webpack/sass/node project
+playground for react/redux/thunk/webpack project

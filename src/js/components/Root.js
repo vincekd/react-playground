@@ -9,7 +9,7 @@ import ViewArea from './ViewArea';
 export default () => {
     return (
         <div id="wrapper">
-          <div id="top-bar"><TopBar /></div>
+          <TopBar />
           <div id="middle-area">
             <LibrarySidebar />
             <ViewArea />

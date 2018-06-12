@@ -4,3 +4,7 @@ export const SELECT_SONG = "SELECT_SONG";
 export const MUSIC_LOADED = "MUSIC_LOADED";
 export const PLAY_SONG = "PLAY_SONG";
 export const SELECT_VIEW = "SELECT_VIEW";
+export const ADD_TO_QUEUE = "ADD_TO_QUEUE";
+export const TOGGLE_REPEAT = "TOGGLE_REPEAT";
+export const TOGGLE_SHUFFLE = "TOGGLE_SHUFFLE";
+export const TOGGLE_PLAYING = "TOGGLE_PLAYING";
