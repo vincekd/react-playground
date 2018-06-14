@@ -34,14 +34,15 @@ function getRandomData() {
         for (let j = 0; j < 8; j++) {
             const songs = [];
             for (let k = 0; k < 12; k++) {
-                songs.push({name: getName()});
+                songs.push({...getIdName(), duration: 260});
             }
-            albums.push({name: getName(), songs});
+            albums.push({...getIdName(), songs, coverImg: "/img/whatever.png", year: 2012});
         }
-        data.push({name: getName(), albums});
+        data.push({...getIdName(), albums});
     }
     return data;
 }
-function getName() {
-    return Math.random() * 100000000;
+function getIdName() {
+    const id = Math.random();
+    return {id, name: Math.round(name * 100000)};
 }
